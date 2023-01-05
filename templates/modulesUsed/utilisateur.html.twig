@@ -1,12 +1,13 @@
-<div class="span3">
-    <div class="well">
-        <ul class="nav nav-list">
-            <li>
-                <a href="connexion.php">Se connecter</a>
-            </li>
-            <li>
-                <a href="inscription.php">S'inscrire</a>
-            </li>
-        </ul>
-    </div>
+<div class="well">
+    <ul class="nav nav-list">
+        <li>
+        {% if app.user is null %}
+            <a class="brand" href="{{ path('app_register') }}">Inscription</button>
+            <a class="brand" href="{{ path('app_login') }}">Connexion</button>
+        {% else %}
+            <p class="brand">{{app.user.pseudo }}</p>
+            <a class="brand" href="{{ path('app_logout') }}">Déconnexion</a>
+        {% endif %}
+        </li>
+    </ul>
 </div>

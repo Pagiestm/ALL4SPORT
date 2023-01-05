@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h2>Connexion</h2>
+            <div id="collapseOne" class="accordion-body collapse in">
+                <div class="accordion-inner">
+                    <div class="span4">
+                        <h4>Pas encore inscrit ?</h4>
+                        <em>
+                            nous vous invitons à vous inscrire<br />
+                        </em>
+                        <br /><br />
+                        <a href="{{ path('app_register') }}" class="btn btn-primary">S'inscrire</a>
+                        
+                    </div>
+                    
+                    <div class="span4 offset2">
+                        <h4>Connexion</h4>
+                        <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                            <label for="inputEmail">Email</label>
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                            
+                            <label for="inputPassword">Mot de Passe</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                        
+                            <br />
+                            <button class="btn btn-lg btn-primary" type="submit" href="{{ path('app_produits') }}">Connexion</button>
+
+                            <input type="hidden" name="_csrf_token"
+                            value="{{ csrf_token('authenticate') }}">
+                        </form>
+                    </div>
+                    <div class="span10">
+                        <a href="mot-de-passe-perdu.php">Mot de passe perdu ?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

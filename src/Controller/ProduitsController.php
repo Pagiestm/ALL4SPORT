@@ -11,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class ProduitsController extends AbstractController
 {
     /**
-     * @Route("/produits", name="app_produits")
+     * @Route("/", name="app_produits")
      */
     public function produits(): Response
     {

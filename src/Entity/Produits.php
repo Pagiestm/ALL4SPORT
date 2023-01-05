@@ -38,11 +38,6 @@ class Produits
     private $disponible;
 
     /**
-     * @ORM\Column(type="string", length=80)
-     */
-    private $categorie;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $image;
@@ -101,18 +96,6 @@ class Produits
     public function setDisponible(bool $disponible): self
     {
         $this->disponible = $disponible;
-
-        return $this;
-    }
-
-    public function getCategorie(): ?string
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(string $categorie): self
-    {
-        $this->categorie = $categorie;
 
         return $this;
     }
