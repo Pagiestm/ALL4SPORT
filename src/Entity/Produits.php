@@ -38,14 +38,17 @@ class Produits
     private $disponible;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity=Media::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $image;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\ManyToOne(targetEntity=Categories::class)
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $tva;
+    private $categorie;
+
 
     public function getId(): ?int
     {
@@ -100,26 +103,26 @@ class Produits
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?Media
     {
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(Media $image): self
     {
         $this->image = $image;
 
         return $this;
     }
 
-    public function getTva(): ?float
+    public function getCategorie(): ?Categories
     {
-        return $this->tva;
+        return $this->categorie;
     }
 
-    public function setTva(float $tva): self
+    public function setCategorie(?Categories $categorie): self
     {
-        $this->tva = $tva;
+        $this->categorie = $categorie;
 
         return $this;
     }

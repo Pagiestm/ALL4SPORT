@@ -2,10 +2,15 @@
     <ul class="nav nav-list">
         <li>
         {% if app.user is null %}
+            <a class="brand" href="{{ path('app_panier')}}">Mon panier</a>
             <a class="brand" href="{{ path('app_register') }}">Inscription</button>
             <a class="brand" href="{{ path('app_login') }}">Connexion</button>
         {% else %}
             <p class="brand">{{app.user.pseudo }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a class="brand" href="{{ path('app_panel')}}">Administration</a>
+            {% endif %}
+            <a class="brand" href="{{ path('app_panier')}}">Mon panier</a>
             <a class="brand" href="{{ path('app_logout') }}">Déconnexion</a>
         {% endif %}
         </li>

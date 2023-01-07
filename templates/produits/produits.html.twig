@@ -12,15 +12,15 @@
         </div>
         <div class="span9">
             <ul class="thumbnails">
-                {% for i in 1..5 %}
+                {% for produit in produits %}
                 <li class="span3">
                     <div class="thumbnail">
-                        <img src="{{ asset ('assets/img/holder.png') }}" alt="ALL4SPORT" width="300" height="300">
+                        <img src="{{ produit.getImage }}" alt="ALL4SPORT" width="200" height="200">
                         <div class="caption">
-                            <h4>Produit ALL4SPORT</h4>
-                            <p>100,00 €</p>
-                            <a class="btn btn-primary" href="{{ path('app_presentation') }}">Plus d'infos</a>
-                            <a class="btn btn-success" href="{{ path('app_panier') }}">Ajouter au panier</a>
+                            <h4>{{ produit.nom }}</h4>
+                            <p>{{ produit.prix }} €</p>
+                            <a class="btn btn-primary" href="{{ path('app_presentation', { 'id' : produit.id}) }}">Plus d'infos</a>
+                            <a class="btn btn-success" href="{{ path('app_ajouterPanier', {'id' : produit.id}) }}">Ajouter au panier</a>
                         </div>
                     </div>
                 </li>
