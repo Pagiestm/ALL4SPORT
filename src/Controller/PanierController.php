@@ -8,6 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitsRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\Produits;
+use App\Entity\UtilisateursAdresses;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\UtilisateurAdresseType;
+use App\Repository\UtilisateursAdressesRepository;
 
 class PanierController extends AbstractController
 {
@@ -105,18 +110,46 @@ class PanierController extends AbstractController
     /**
      * @Route("/panier/livraison", name="app_livraison")
      */
-    public function livraison(): Response
+    public function livraison(UtilisateursAdressesRepository $utilisateuradresseRepo, Request $request, ManagerRegistry $doctrine, SessionInterface $session): Response
     {
-        return $this->render('panier/livraison.html.twig', [
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $user = $this->getUser();
+        $utilisateurAdresses = $utilisateuradresseRepo->findby(['user'=>$user]);
+
+        $utilisateurAdresse = new UtilisateursAdresses();
+        $form = $this->createForm(UtilisateurAdresseType::class, $utilisateurAdresse);
+
+        $manager = $doctrine->getManager();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $utilisateurAdresse = $form->getData();
+            $manager->persist($utilisateurAdresse);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_livraison');
+        }
+        
+
+        return $this->renderForm('panier/livraison.html.twig', [
+            'utilisateurAdresse' => $form,
+            "utilisateurAdresses" => $utilisateurAdresses,
         ]);
     }
 
     /**
-     * @Route("/panier/validation", name="app_validation")
+     * @Route("/panier/commande", name="app_commande")
      */
-    public function validation(): Response
-    {
-        return $this->render('panier/validation.html.twig', [
-        ]);
+    public function Commande() {
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('panier/commande.html.twig' );
     }
 }

@@ -38,7 +38,6 @@ security:
 
     role_hierarchy:
         ROLE_EDITOR: ROLE_USER
-        ROLE_ADMIN: ROLE_EDITOR
 
 when@test:
     security:

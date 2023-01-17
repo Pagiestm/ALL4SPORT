@@ -5,7 +5,6 @@
 {% block body %}
 <div class="container">
     <div class="row">
-
             <div class="span9">
                 <h2>Votre panier</h2>
                 <form>
@@ -52,14 +51,7 @@
                 <dd>{{ total }}€</dd>
             </dl>
             <div class="clearfix"></div>
-            {% if app.user %}
-                <a href="{{ path ('app_livraison') }}" class="btn btn-success pull-right">Valider mon panier</a>
-            {% else %}
-                <a class="btn btn-success pull-right" href="{{ path('app_login') }}">Connexion</a>
-                <br>
-                <br>
-                <p class="pull-right">Veuillez vous connecter pour valider votre panier</p>
-            {% endif %}
+            <a href="{{ path ('app_livraison') }}" class="btn btn-success pull-right">Continuer</a>
             <a href="{{ path ('app_produits') }}" class="btn btn-primary">Continuer mes achats</a>
         </div>
     

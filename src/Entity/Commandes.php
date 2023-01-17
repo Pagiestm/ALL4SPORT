@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,11 +18,6 @@ class Commandes
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $valider;
 
     /**
      * @ORM\Column(type="datetime")
@@ -43,21 +40,14 @@ class Commandes
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Etat;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function isValider(): ?bool
-    {
-        return $this->valider;
-    }
-
-    public function setValider(bool $valider): self
-    {
-        $this->valider = $valider;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -104,6 +94,18 @@ class Commandes
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->Etat;
+    }
+
+    public function setEtat(string $Etat): self
+    {
+        $this->Etat = $Etat;
 
         return $this;
     }
