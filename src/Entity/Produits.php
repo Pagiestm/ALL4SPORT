@@ -49,7 +49,6 @@ class Produits
      */
     private $categorie;
 
-
     public function getId(): ?int
     {
         return $this->id;

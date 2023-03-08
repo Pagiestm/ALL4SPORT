@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CommandesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,16 +23,6 @@ class Commandes
     private $date;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $reference;
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $produits = [];
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commandes")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -44,6 +32,26 @@ class Commandes
      * @ORM\Column(type="string", length=255)
      */
     private $Etat;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $produit;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prix;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantite;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $total;
 
     public function getId(): ?int
     {
@@ -58,30 +66,6 @@ class Commandes
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getReference(): ?int
-    {
-        return $this->reference;
-    }
-
-    public function setReference(int $reference): self
-    {
-        $this->reference = $reference;
-
-        return $this;
-    }
-
-    public function getProduits(): ?array
-    {
-        return $this->produits;
-    }
-
-    public function setProduits(array $produits): self
-    {
-        $this->produits = $produits;
 
         return $this;
     }
@@ -106,6 +90,54 @@ class Commandes
     public function setEtat(string $Etat): self
     {
         $this->Etat = $Etat;
+
+        return $this;
+    }
+
+    public function getProduit(): ?string
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(string $produit): self
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getTotal(): ?int
+    {
+        return $this->total;
+    }
+
+    public function setTotal(int $total): self
+    {
+        $this->total = $total;
 
         return $this;
     }

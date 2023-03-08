@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier les utilisateurs{% endblock %}
+{% block title %}Modifier l'Utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Modifier l'utilisateurs</h1>
+    <h1>Modifier l'utilisateur</h1>
     {{ form(userForm) }}
+
+    <a href="{{ path ('app_utilisateurs') }}" class="btn btn-primary">Retour</a>
 {% endblock %}

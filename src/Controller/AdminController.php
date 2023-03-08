@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Commandes;
 use App\Form\EditUserType;
+use App\Form\EditCommandeType;
 use App\Repository\UserRepository;
+use App\Repository\CommandesRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,6 +69,47 @@ class AdminController extends AbstractController
 
         return $this->render('admin/editUser.html.twig', [
             'userForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     * Liste des commandes
+     * 
+     * @Route("/admin/commandes", name="app_commandes")
+     */
+    public function commandeList(commandesRepository $commandes)
+    {
+        return $this->render("admin/commandes.html.twig", [
+            'commandes' => $commandes->findAll()
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     * Modifier une Commande
+     * 
+     * @Route("/admin/modifierCommande/{id}", name="app_modifierCommandes")
+     */
+    public function editCommande(Commandes $commandes, Request $request, ManagerRegistry $doctrine)
+    {
+        $form = $this->createForm(EditCommandeType::class, $commandes);
+
+        $manager = $doctrine->getManager();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commandes = $form->getData();
+            $manager->persist($commandes);
+            $manager->flush();
+
+            $this->addFlash('message', 'Commande modifié avec succès');
+            return $this->redirectToRoute('app_commandes');
+        }
+
+        return $this->render('admin/editCommande.html.twig', [
+            'commandeForm' => $form->createView()
         ]);
     }
 }

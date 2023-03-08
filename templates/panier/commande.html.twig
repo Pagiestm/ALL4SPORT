@@ -1,3 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title_container %}Mes commandes{% endblock %}
+{% block title %}Mes commandes{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+            <div class="span9">
+                <h2>Vos Commandes</h2>
+                <form>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom du Produit</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                            <th>Etat</th>
+                            <th>Adresse de Livraison</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commande in commandes %}
+                        <tr>
+                            <td>{{ commande.produit }}</td>                                                       
+                            <td>{{ commande.prix }}</td>
+                            <td>{{ commande.quantite }}</td>
+                            <td>{{ commande.total }}</td>
+                            <td>{{commande.etat}}</td>
+                            <td></td>
+                        </tr>            
+                        {% else %}
+                        <tr>
+                            <td colspan="5">Vous n'avez pas de commande en cours</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Commandes{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+    <h1>Liste des Commandes</h1>
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>Dates</th>
+            <th>Etats</th>
+            <th>Produits</th>
+            <th>Prix</th>
+            <th>Quantités</th>
+            <th>Total</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    <td>{{ commande.id }}</td>
+                    <td>{{ commande.date|date("H:i:s d-m-Y") }}</td>
+                    <td>{{ commande.etat }}</td>
+                    <td>{{ commande.produit }}</td>
+                    <td>{{ commande.prix }}€</td>
+                    <td>{{ commande.quantite }}</td>
+                    <td>{{ commande.total }}€</td>
+                    <td><a href="{{ path('app_modifierCommandes', {'id': commande.id}) }}" class="btn btn-warning">Modifier</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Il n'y pas de Commande pour le moment</td>
+                </tr>
+            {% endfor %}
+        <tbody>
+    </table>
+    </div>
+    <a href="{{ path ('app_panel') }}" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}

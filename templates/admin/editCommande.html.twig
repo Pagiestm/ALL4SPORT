@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la Commande{% endblock %}
+
+{% block body %}
+    <h1>Modifier la Commande</h1>
+    {{ form(commandeForm) }}
+
+    <a href="{{ path ('app_commandes') }}" class="btn btn-primary">Retour</a>
+{% endblock %}

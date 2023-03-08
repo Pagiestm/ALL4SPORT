@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitsRepository;
+use App\Entity\Commandes;
+use App\Repository\CommandesRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\Produits;
 use App\Entity\UtilisateursAdresses;
@@ -13,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UtilisateurAdresseType;
 use App\Repository\UtilisateursAdressesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PanierController extends AbstractController
 {
@@ -144,12 +147,48 @@ class PanierController extends AbstractController
     /**
      * @Route("/panier/commande", name="app_commande")
      */
-    public function Commande() {
+    public function Commande(CommandesRepository $commandeRepos, UtilisateursAdressesRepository $utilisateuradresseRepo, SessionInterface $session, ProduitsRepository $produitRepo, EntityManagerInterface $entityManager) 
+    {
 
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('panier/commande.html.twig' );
+        $user = $this->getUser();
+        $commandes = $commandeRepos->findby(['user'=>$user]);
+
+        $panier = $session->get("panier", []);
+        $total = 0;
+        $dataPanier = [];
+
+        foreach($panier as $id => $quantite) {
+            $produits = $produitRepo->find($id);
+            $dataPanier[] = [
+                "produit" => $produits,
+            ];
+            $total += $produits->getPrix() * $quantite;
+        }
+
+        if($panier!=null){
+            $commande = new Commandes;
+            $commande->setEtat("En cours")
+                     ->setUser($this->getUser())
+                     ->setDate(new \DateTimeImmutable())
+                     ->setProduit($produits->getNom())
+                     ->setPrix($produits->getPrix())
+                     ->setTotal($total)
+                     ->setQuantite($quantite);
+    
+            $entityManager->persist($commande);
+            $entityManager->flush();
+        }
+    
+
+        // On supprime ce qu'il y a dans le panier
+        $session->set('panier', []);
+
+        return $this->render('panier/commande.html.twig', [
+            'commandes' => $commandes,
+        ]);
     }
 }
