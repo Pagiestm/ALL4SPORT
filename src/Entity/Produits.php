@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +50,11 @@ class Produits
      * @ORM\JoinColumn(nullable=false)
      */
     private $categorie;
+
+    public function __toString()
+    {
+        return $this->nom;
+    }
 
     public function getId(): ?int
     {

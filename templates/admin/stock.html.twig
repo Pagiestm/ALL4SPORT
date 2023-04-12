@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des magasins et de leurs stocks{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+    <h1>Liste des magasins et de leurs stocks</h1>
+    <table class="table">
+        <thead>
+            <th>Magasin</th>
+            <th>produit</th>
+            <th>Quantité</th>
+            <th>Stock critique ?</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.magasin }}</td>
+                    <td>{{ stock.produit }}</td>
+                    <td>{{ stock.quantite }}</td>
+                    <td>{{ stock.stockCritique ? 'oui' : 'non' }}</td>
+                    <td><a href="{{ path('app_modifierStock', {'id': stock.id}) }}" class="btn btn-warning">Modifier</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Il n'y pas de Produit pour le moment</td>
+                </tr>
+            {% endfor %}
+        <tbody>
+    </table>
+    </div>
+    <a href="{{ path ('app_panel') }}" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}

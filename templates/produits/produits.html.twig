@@ -12,18 +12,20 @@
         </div>
         <div class="span9">
             <ul class="thumbnails">
-                {% for produit in produits %}
+                {% for stock in stocks %}
+                {% if stock.stockCritique == 0 %}
                 <li class="span3">
                     <div class="thumbnail">
-                        <img src="{{ produit.getImage }}" alt="ALL4SPORT" width="200" height="200">
+                        <img src="{{ stock.produit.getImage }}" alt="ALL4SPORT" width="200" height="200">
                         <div class="caption">
-                            <h4>{{ produit.nom }}</h4>
-                            <p>{{ produit.prix }} €</p>
-                            <a class="btn btn-primary" href="{{ path('app_presentation', { 'id' : produit.id}) }}">Plus d'infos</a>
-                            <a class="btn btn-success" href="{{ path('app_ajouterPanier', {'id' : produit.id}) }}">Ajouter au panier</a>
+                            <h4>{{ stock.produit.nom }}</h4>
+                            <p>{{ stock.produit.prix }} €</p>
+                            <a class="btn btn-primary" href="{{ path('app_presentation', { 'id' : stock.produit.id}) }}">Plus d'infos</a>
+                            <a class="btn btn-success" href="{{ path('app_ajouterPanier', {'id' : stock.produit.id}) }}">Ajouter au panier</a>
                         </div>
                     </div>
                 </li>
+                {% endif %}
                 {% endfor %}
             </ul>
 

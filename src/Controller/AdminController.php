@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Commandes;
+use App\Entity\Magasin;
+use App\Entity\Stocks;
 use App\Form\EditUserType;
 use App\Form\EditCommandeType;
+use App\Form\EditStocksType;
 use App\Repository\UserRepository;
 use App\Repository\CommandesRepository;
+use App\Repository\StocksRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -110,6 +114,47 @@ class AdminController extends AbstractController
 
         return $this->render('admin/editCommande.html.twig', [
             'commandeForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     * Liste des stocks par magasins
+     * 
+     * @Route("/admin/stock", name="app_stock")
+     */
+    public function StockList(StocksRepository $stocks)
+    {
+        return $this->render("admin/stock.html.twig", [
+            'stocks' => $stocks->findAll()
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     * Modifier les stocks
+     * 
+     * @Route("/admin/modifierStock/{id}", name="app_modifierStock")
+     */
+    public function editStock(Stocks $stocks, Request $request, ManagerRegistry $doctrine)
+    {
+        $form = $this->createForm(EditStocksType::class, $stocks);
+
+        $manager = $doctrine->getManager();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $stocks = $form->getData();
+            $manager->persist($stocks);
+            $manager->flush();
+
+            $this->addFlash('message', 'Stock modifié avec succès');
+            return $this->redirectToRoute('app_stock');
+        }
+
+        return $this->render('admin/editStock.html.twig', [
+            'stockForm' => $form->createView()
         ]);
     }
 }

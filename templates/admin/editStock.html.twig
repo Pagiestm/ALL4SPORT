@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le Stock{% endblock %}
+
+{% block body %}
+    <h1>Modifier le Magasin</h1>   
+    {{ form(stockForm) }}
+
+    <a href="{{ path ('app_stock') }}" class="btn btn-primary">Retour</a>
+{% endblock %}

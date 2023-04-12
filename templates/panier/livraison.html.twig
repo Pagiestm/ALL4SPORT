@@ -16,7 +16,7 @@
                             <label class="radio">
                                 <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
                                 {{ utilisateurAdresses.adresse }}, {{ utilisateurAdresses.cp }} {{ utilisateurAdresses.ville }}, {{ utilisateurAdresses.Pays }} 
-                                <a href="#"><i class="icon-trash"></i></a>
+                                <a href={{ path('supprimerAdresse', {'id': utilisateurAdresses.id}) }}><i class="icon-trash"></i></a>
                             </label>
                             {% endfor %}
                             <br /><br />
