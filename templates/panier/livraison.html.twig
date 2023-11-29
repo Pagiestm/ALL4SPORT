@@ -10,7 +10,6 @@
             <div id="collapseOne" class="accordion-body collapse in">
                 <div class="accordion-inner">
                     <div class="span4">
-                        <form action="{{ path ('app_commande') }}">
                             <h4>Adresse de livraison</h4>
                             {% for utilisateurAdresses in utilisateurAdresses %}
                             <label class="radio">
@@ -20,8 +19,7 @@
                             </label>
                             {% endfor %}
                             <br /><br />
-                            <button class="btn btn-primary">Valider mon adresse de livraison + ma commande </button>
-                        </form>
+                            <a href="{{ path ('app_validation_commande') }}" class="btn btn-success pull-right">Continuer</a>
                     </div>
 				<div class="span4 offset2">
 					<h4>Ajouter une nouvelle adresse</h4>

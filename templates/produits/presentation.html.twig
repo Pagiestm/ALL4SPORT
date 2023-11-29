@@ -10,7 +10,6 @@
                 <div class="span5">
                     <img src="{{ produit.getImage }}" alt="DevAndClick" width="470" height="310">
                 </div>
-
                 <div class="span4">
                     <h4>{{ produit.categorie.nom }}</h4>
                     <h5>{{ produit.nom }}</h5>
@@ -20,8 +19,7 @@
                         <div>
                             <a class="btn btn-primary" href="{{ path('app_ajouterPanier', {'id' : produit.id}) }}">Ajouter au panier</a>
                         </div>
-                    </form>
-                    
+                    </form>   
                 </div>
             </div>
         </div>

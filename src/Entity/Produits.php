@@ -51,6 +51,22 @@ class Produits
      */
     private $categorie;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Commandes::class, inversedBy="produits")
+     */
+    private $commande;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Stocks::class, mappedBy="produits")
+     */
+    private $stock;
+
+    public function __construct()
+    {
+        $this->commande = new ArrayCollection();
+        $this->stock = new ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->nom;
@@ -129,6 +145,60 @@ class Produits
     public function setCategorie(?Categories $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commandes>
+     */
+    public function getCommande(): Collection
+    {
+        return $this->commande;
+    }
+
+    public function addCommande(Commandes $commande): self
+    {
+        if (!$this->commande->contains($commande)) {
+            $this->commande[] = $commande;
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commandes $commande): self
+    {
+        $this->commande->removeElement($commande);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stocks>
+     */
+    public function getStock(): Collection
+    {
+        return $this->stock;
+    }
+
+    public function addStock(Stocks $stock): self
+    {
+        if (!$this->stock->contains($stock)) {
+            $this->stock[] = $stock;
+            $stock->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStock(Stocks $stock): self
+    {
+        if ($this->stock->removeElement($stock)) {
+            // set the owning side to null (unless already changed)
+            if ($stock->getProduit() === $this) {
+                $stock->setProduit(null);
+            }
+        }
 
         return $this;
     }

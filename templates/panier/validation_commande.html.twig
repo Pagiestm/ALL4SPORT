@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validation de la commande{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="span9">
+            <h2>Validation de la commande</h2>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Produits</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Prix total</th>
+                    </tr>
+                </thead>
+            <tbody>
+            {% for item in dataPanier %}
+                    <tr>
+                        <td>{{ item.produit.nom }}</td>
+                        <td>{{ item.quantite }}</td>
+                        <td>{{ item.produit.prix }} €</td>
+                        <td>{{ item.produit.prix * item.quantite }} €</td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+
+            <dl class="dl-horizontal pull-right">
+                <dt>Total à débourser :</dt>
+                    <dd>{{ total }}€</dd>
+                <dt>Quantité Total :</dt>
+                    <dd>{{ quantiteTotale }}</dd>
+            </dl>
+            <div class="clearfix"></div>
+                <a href="{{ path('app_panier') }}" class="btn btn-secondary">Retour au panier</a>
+                <a href="{{ path('app_commande') }}" class="btn btn-primary pull-right">Valider la commande</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

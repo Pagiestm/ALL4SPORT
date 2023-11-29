@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Commandes;
-use App\Entity\Magasin;
 use App\Entity\Stocks;
 use App\Form\EditUserType;
 use App\Form\EditCommandeType;

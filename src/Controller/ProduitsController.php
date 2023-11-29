@@ -27,7 +27,6 @@ class ProduitsController extends AbstractController
             if (!$categorie) {
                 throw $this->createNotFoundException('La catégorie demandée n\'existe pas');
             }
-
             $produits = $produitRepo->findBy(['categorie' => $categorie]);
         }
 

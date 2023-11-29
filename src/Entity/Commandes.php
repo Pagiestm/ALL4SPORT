@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,24 +36,24 @@ class Commandes
     private $Etat;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $produit;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $prix;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $quantite;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $total;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Produits::class, mappedBy="commande")
+     */
+    private $produits;
+
+    public function __construct()
+    {
+        $this->produits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -94,30 +96,6 @@ class Commandes
         return $this;
     }
 
-    public function getProduit(): ?string
-    {
-        return $this->produit;
-    }
-
-    public function setProduit(string $produit): self
-    {
-        $this->produit = $produit;
-
-        return $this;
-    }
-
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(float $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-
     public function getQuantite(): ?int
     {
         return $this->quantite;
@@ -130,14 +108,41 @@ class Commandes
         return $this;
     }
 
-    public function getTotal(): ?int
+    public function getTotal(): ?float
     {
         return $this->total;
     }
 
-    public function setTotal(int $total): self
+    public function setTotal(float $total): self
     {
         $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produits>
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produits $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->addCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produits $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            $produit->removeCommande($this);
+        }
 
         return $this;
     }

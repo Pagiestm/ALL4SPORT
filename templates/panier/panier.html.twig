@@ -8,53 +8,52 @@
             <div class="span9">
                 <h2>Votre panier</h2>
                 <form>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nom du Produit</th>
-                            <th>Prix</th>
-                            <th>Quantité</th>
-                            <th>Total</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nom du Produit</th>
+                                <th>Prix</th>
+                                <th>Quantité</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         {% for element in dataPanier %}
-                        <tr>
-                            <td>{{ element.produit.nom }}</td>
-                            <td class="text-right">{{ element.produit.prix }} €</td>
-                            <td>{{ element.quantite }}</td>
-                            <td class="text-right">{{ element.quantite * element.produit.prix }} €</td>
-                            <td>
-                                <a href="{{ path("app_ajouterPanier", {id : element.produit.id}) }}" class="btn btn-sucess">
-                                    <i>+</i>
-                                </a>
-                                <a href="{{ path("app_supprimerElement", {id : element.produit.id}) }}" class="btn btn-warning">
-                                    <i>-</i>
-                                </a>
-                                <a href="{{ path("app_supprimerLeProduit", {id : element.produit.id}) }}" class="btn btn-danger">
-                                    <i>X</i>
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{{ element.produit.nom }}</td>
+                                <td class="text-right">{{ element.produit.prix }} €</td>
+                                <td>{{ element.quantite }}</td>
+                                <td class="text-right">{{ element.quantite * element.produit.prix }} €</td>
+                                <td>
+                                    <a href="{{ path("app_ajouterPanier", {id : element.produit.id}) }}" class="btn btn-sucess">
+                                        <i>+</i>
+                                    </a>
+                                    <a href="{{ path("app_supprimerElement", {id : element.produit.id}) }}" class="btn btn-warning">
+                                        <i>-</i>
+                                    </a>
+                                    <a href="{{ path("app_supprimerLeProduit", {id : element.produit.id}) }}" class="btn btn-danger">
+                                        <i>X</i>
+                                    </a>
+                                </td>
+                            </tr>
                         {% else %}
-                        <tr>
-                            <td colspan="5" class="text-center">Votre panier est vide</td>
-                        </tr>
+                            <tr>
+                                <td colspan="5" class="text-center">Votre panier est vide</td>
+                            </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
-            </form>
+                        </tbody>
+                    </table>
+                </form>
 
-            <dl class="dl-horizontal pull-right">
-                <dt>Total:</dt>
-                <dd>{{ total }}€</dd>
-            </dl>
-            <div class="clearfix"></div>
-            <a href="{{ path ('app_livraison') }}" class="btn btn-success pull-right">Continuer</a>
-            <a href="{{ path ('app_produits') }}" class="btn btn-primary">Continuer mes achats</a>
-        </div>
-    
+                <dl class="dl-horizontal pull-right">
+                    <dt>Total:</dt>
+                    <dd>{{ total }}€</dd>
+                </dl>
+                <div class="clearfix"></div>
+                    <a href="{{ path ('app_livraison') }}" class="btn btn-success pull-right">Continuer</a>
+                    <a href="{{ path ('app_produits') }}" class="btn btn-primary">Continuer mes achats</a>
+            </div>
     </div>
 </div>
 {% endblock %}

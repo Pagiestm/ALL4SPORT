@@ -12,8 +12,7 @@
             <th>Dates</th>
             <th>Etats</th>
             <th>Produits</th>
-            <th>Prix</th>
-            <th>Quantités</th>
+            <th>Quantité Total</th>
             <th>Total</th>
             <th>Action</th>
         </thead>
@@ -23,8 +22,13 @@
                     <td>{{ commande.id }}</td>
                     <td>{{ commande.date|date("H:i:s d-m-Y") }}</td>
                     <td>{{ commande.etat }}</td>
-                    <td>{{ commande.produit }}</td>
-                    <td>{{ commande.prix }}€</td>
+                    <td>
+                        <ul>
+                            {% for produit in commande.produits %}
+                                <li>{{ produit.nom }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
                     <td>{{ commande.quantite }}</td>
                     <td>{{ commande.total }}€</td>
                     <td><a href="{{ path('app_modifierCommandes', {'id': commande.id}) }}" class="btn btn-warning">Modifier</a></td>
